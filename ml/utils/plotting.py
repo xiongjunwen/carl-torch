@@ -101,9 +101,9 @@ def draw_weighted_distributions(x0, x1, w0, w1,
             w0 = w0/w0.sum()
             w1 = w1/w1.sum()
             w_carl = w_carl/w_carl.sum()
-        nom_count, nom_bin, nom_bars = axes[0].hist(x0[:,id], bins = binning[id], weights = w0, label = "nominal", **hist_settings_nom, density=True)
-        carl_count, carl_bin, carl_bars = axes[0].hist(x0[:,id], bins = binning[id], weights = w_carl, label = 'nominal*CARL', **hist_settings_CARL, density=True)
-        alt_count, alt_bins, alt_bars = axes[0].hist(x1[:,id], bins = binning[id], weights = w1, label = legend, **hist_settings_alt, density=True)
+        nom_count, nom_bin, nom_bars = axes[0].hist(x0[:,id], bins = binning[id], weights = w0, label = "nominal", **hist_settings_nom, density=False)
+        carl_count, carl_bin, carl_bars = axes[0].hist(x0[:,id], bins = binning[id], weights = w_carl, label = 'nominal*CARL', **hist_settings_CARL, density=False)
+        alt_count, alt_bins, alt_bars = axes[0].hist(x1[:,id], bins = binning[id], weights = w1, label = legend, **hist_settings_alt, density=False)
         axes[0].grid(axis='x', color='silver')
         if addInvSample:
             print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
@@ -216,6 +216,7 @@ def draw_weighted_distributions(x0, x1, w0, w1,
                     mask1 = (x1[:,id] < (xbin + width)) & (x1[:,id] > (xbin - width))
                     # Form bin error
                     binsqrsum_x0 = np.sum(w0[mask0]**2)
+                    print("debug how this weight works???: ", w0.shape)
                     binsqrsum_x1 = np.sum(w1[mask1]**2)
                     binsqrsum_x0_carl = np.sum(w_carl[mask0]**2)
                     binsqrsum_x0 = math.sqrt(binsqrsum_x0)

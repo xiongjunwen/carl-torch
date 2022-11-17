@@ -39,6 +39,8 @@ polarity = opts.polarity
 loss_type = opts.loss_type
 BoolFilter = opts.BoolFilter
 n_workers = opts.n_workers
+clipFeatures = opts.clipFeatures.split(",") if len(opts.clipFeatures)>0 else []
+clippingQuantile = opts.clippingQuantile
 #################################################
 
 #################################################
@@ -98,8 +100,7 @@ else:
         pathA=p+nominal+".root",
         pathB=p+variation+".root",
         noTar=True,
-        # normalise=True,
-        normalise=False, # avoid normalizing the weights 
+        normalise=False,
         debug=False,
         weight_preprocess=weight_sigma > 0,
         weight_preprocess_nsigma=weight_sigma,
@@ -107,6 +108,8 @@ else:
         weight_polarity=polarity,
         scaling=scale_method,
         algorithms=opts.algorithms.split(',') if opts.algorithms is not None else None,
+        clipFeatures = clipFeatures,
+        clippingQuantile = clippingQuantile,
     )
     logger.info(" Loaded new datasets ")
 #######################################
