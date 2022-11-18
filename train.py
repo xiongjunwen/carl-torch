@@ -112,6 +112,9 @@ else:
         clippingQuantile = clippingQuantile,
     )
     logger.info(" Loaded new datasets ")
+
+if True:
+  quit()
 #######################################
 
 #######################################

@@ -4,6 +4,10 @@ parser = argparse.ArgumentParser(description="Preprocess events.")
 parser.add_argument("path", metavar="p", type=str,
                     help="Path to the ROOT files")
 parser.add_argument("features", type=str, help="Comma-separated features to select")
+parser.add_argument("-r", "--remove", type=str, 
+                    nargs="+",
+                    help="Features to remove from selections; \
+                    remove string for selection but not training")
 parser.add_argument("-n", "--n_events", type=int,
                     help="The number of entries to randomly select (-1 for all)",
                     default=-1)
@@ -34,7 +38,7 @@ def totalNumberOfEvents(path):
 def loadFractionOfEvents(path, features, selection, fraction=1.0):
     allEvents = pd.DataFrame(columns=features, dtype=np.float64)
     for file in glob.glob(path):
-        print(file)
+        print(f"preprocessing input file: {file}")
         with uproot.open(file)["Nominal"] as tree:
             nEventsToLoad = int(fraction * tree.num_entries) + 1
             df = tree.arrays(features, library="pd", cut=selection)
@@ -61,8 +65,12 @@ def main(args):
     print(f"features = {features}")
     print(f"selection = {args.selection}")
     df = loadFractionOfEvents(args.path, features, args.selection, fraction=fraction)
-    print(df)
-    print("Shuffling the dataframe")
+    print(f"Total number of events selected: {df.shape[0]}")
+    print("Removing variables only used for selection...")
+    for remove_var in args.remove:
+        df.drop(remove_var, inplace=True, axis=1)
+    print(f"Total variables added: {df.shape[1]}")
+    print("Shuffling the dataframe...")
     df = df.sample(frac=1.0, random_state=42)
     outputFile = uproot.recreate(args.output_path)
     outputFile["Nominal"] = df

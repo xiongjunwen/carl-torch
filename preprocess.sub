@@ -8,4 +8,4 @@ log                     = CARLRun.$(ClusterId).log
 request_memory 		= 10000 MB
 should_transfer_files   = YES
 +JobFlavour             = "longlunch"
-queue argument from flavours.txt
+queue
