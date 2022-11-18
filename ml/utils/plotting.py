@@ -216,7 +216,6 @@ def draw_weighted_distributions(x0, x1, w0, w1,
                     mask1 = (x1[:,id] < (xbin + width)) & (x1[:,id] > (xbin - width))
                     # Form bin error
                     binsqrsum_x0 = np.sum(w0[mask0]**2)
-                    print("debug how this weight works???: ", w0.shape)
                     binsqrsum_x1 = np.sum(w1[mask1]**2)
                     binsqrsum_x0_carl = np.sum(w_carl[mask0]**2)
                     binsqrsum_x0 = math.sqrt(binsqrsum_x0)

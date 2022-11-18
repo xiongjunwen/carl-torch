@@ -64,11 +64,26 @@ def main(args):
     features = args.features.split(",")
     print(f"features = {features}")
     print(f"selection = {args.selection}")
+
+    # create wanted df 
     df = loadFractionOfEvents(args.path, features, args.selection, fraction=fraction)
     print(f"Total number of events selected: {df.shape[0]}")
+
+    ####### hard-code checking description 
+    # create numeric label for sr&cr if inclusive
+    descri_list = df["Description"].unique()
+    if len(descri_list)>0:
+        print("Adding description labels for inclusive training...")
+        df["DescriptionLabel"] = df.loc[:, "Description"]
+        for num, desc in enumerate(descri_list):
+            df.replace(desc, num, inplace=True)
+
+    # clean up string vars for selection only 
     print("Removing variables only used for selection...")
     for remove_var in args.remove:
         df.drop(remove_var, inplace=True, axis=1)
+
+    # shuffling and writing df 
     print(f"Total variables added: {df.shape[1]}")
     print("Shuffling the dataframe...")
     df = df.sample(frac=1.0, random_state=42)
