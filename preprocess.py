@@ -71,17 +71,18 @@ def main(args):
 
     ####### hard-code checking description 
     # create numeric label for sr&cr if inclusive
-    descri_list = df["Description"].unique()
-    if len(descri_list)>0:
-        print("Adding description labels for inclusive training...")
-        df["DescriptionLabel"] = df.loc[:, "Description"]
-        for num, desc in enumerate(descri_list):
-            df.replace(desc, num, inplace=True)
+    # descri_list = df["Description"].unique()
+    # if len(descri_list)>0:
+    #     print("Adding description labels for inclusive training...")
+    #     df["DescriptionLabel"] = df.loc[:, "Description"]
+    #     for num, desc in enumerate(descri_list):
+    #         df.replace(desc, num, inplace=True)
 
     # clean up string vars for selection only 
     print("Removing variables only used for selection...")
-    for remove_var in args.remove:
-        df.drop(remove_var, inplace=True, axis=1)
+    if args.remove: 
+        for remove_var in args.remove:
+            df.drop(remove_var, inplace=True, axis=1)
 
     # shuffling and writing df 
     print(f"Total variables added: {df.shape[1]}")
