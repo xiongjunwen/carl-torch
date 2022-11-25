@@ -1,11 +1,19 @@
 #!/bin/bash
 
-cd /afs/cern.ch/user/l/lvozdeck/public/CarlTorch/carl-torch # change this to your path !!!!
+# enter the right folder for run 
+cd /afs/cern.ch/user/j/jxiong/workdir/vhcc/carl/carl-torch # change this to your path !!!!
 
-echo "training $3_$2 (FlavourLabel==$1)"
-
+# training info 
+echo "training on vhcc z+jets"
+# activate the env 
 source CarlEnv/bin/activate
 
-python train.py -n Wjets_Sh221_$2 -v Wjets_MGPy8_$2 -e -1 -p ../trainingData/ -g $3_$2 -t Nominal -f "MET,dPhiLBmin,dPhiVBB,dRBB,dYWH,mBB,mTW,Mtop,pTB1,pTB2,pTV,nJ" -w EventWeight --scale-method minmax --clipFeatures "mBB,MET,mTW,Mtop,pTB1,pTB2,pTV" --clippingQuantile 0.99
+#################################### 11/25/2022 first train on 3pjet all flavors 
+python train.py -n vhcc_hadded_all_tree_2L_zjets_sh2211_mva_3pjet_2fl_preprocessed.root \
+-v vhcc_hadded_all_tree_2L_zjets_fxfx_mva_3pjet_2fl_preprocessed.root \
+-e -1 -p /eos/user/j/jxiong/workdir/hcc/carl/preprocessed/ -g zjets-2L-3pjets -t Nominal \
+-f "mBB,dRBB,dEtaVBB,dPhiVBB,pTV,pTB1,pTB2,METSig,mLL,cosThetaLep,bin_bTagB1,bin_bTagB2,mBBJ,pTJ3,bin_bTagJ3,nTags,nJ,FlavB1,FlavB2" \
+-w EventWeight --scale-method minmax
 
+# deactivate env 
 deactivate
