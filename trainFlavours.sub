@@ -5,9 +5,8 @@ arguments               = $(ClusterId)$(ProcId)
 output                  = CARLRun.$(ClusterId).$(ProcId).out
 error                   = CARLRun.$(ClusterId).$(ProcId).err
 log                     = CARLRun.$(ClusterId).log
-request_memory 		= 20000 MB
 should_transfer_files   = YES
++JobFlavour             = "tomorrow"
 request_GPUs 		= 1
 request_CPUs 		= 0
-+JobFlavour             = "tomorrow"
 queue
