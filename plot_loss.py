@@ -20,3 +20,4 @@ if __name__ == "__main__":
     plt.ylabel("loss")
     plt.legend(frameon=False, title="")
     plt.show()
+    plt.savefig(f"loss_plot_{opts.global_name}.png")
